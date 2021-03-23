@@ -1,2 +1,2 @@
-release: python manage.py migrate
+release: ./tasks.sh
 web: gunicorn vough_backend.wsgi
