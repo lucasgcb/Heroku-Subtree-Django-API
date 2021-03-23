@@ -1,3 +1,24 @@
+Comandos para desenvolvimento
+
+```bash
+
+heroku git:remote -a voughzera
+git subtree push --prefix vough_backend heroku master
+
+python3.9 -m venv vough
+source vough/bin/activate
+
+sudo apt-get install python3.9-dev
+sudo apt install libpq-dev
+python manage.py collectstatic
+gunicorn vough_backend.wsgi
+k6 run -e API_BASE='http://localhost:8000/' tests-open.js
+```
+
+
+
+
+
 # Teste Técnico Desenvolvedor(a) Python Júnior [REMOTO]
 
 Neste repositório você encontra o enunciado do teste técnico para a vaga de Desenvolvedor(a) Python Júnior [REMOTO] da [Instruct](https://instruct.com.br/)!
