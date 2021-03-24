@@ -15,7 +15,7 @@ import json
 
 class OrganizationViewSet(viewsets.ModelViewSet):
 
-    queryset = models.Organization.objects.all().order_by('score')
+    queryset = models.Organization.objects.all().order_by('-score')
     serializer_class = serializers.OrganizationSerializer
     lookup_field = "login"
 
