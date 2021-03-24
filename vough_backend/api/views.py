@@ -19,22 +19,29 @@ from api.models import Organization
 
 class OrganizationViewSet(viewsets.ModelViewSet):
     """
-    Viewset for returning, scrapping and deleting API information of GitHub organizations.
+    Viewset for viewing, storing and deleting API information of GitHub organizations.
 
-    ...
+    ## Endpoint 1
+    Check the cache of viewed organizations
 
-    Methods
-    -------
-    retrieve(request, login=None)
-        Attempts to retrieve, return and store GitHub organizations with the matching login.
-        Returns json on hit.
-        Throws 404 on miss.
+    /api/orgs/
+
+
+    ## Endpoint 2
+    Enter an organization <login> name for json results. Returns 404 if it does not exist.
+
+    /api/orgs/<login>
     """
     # Ordenar por ordem decrescente (maior para menor)
     queryset = models.Organization.objects.all().order_by('-score')  # pylint: disable=no-member
     serializer_class = serializers.OrganizationSerializer
     lookup_field = "login"
     def retrieve(self, request, login=None):
+        """
+        Attempts to retrieve, return and store GitHub organizations with the matching login.
+        Returns json on hit.
+        Throws 404 on miss.
+        """
         api = GithubApi()
         response = api.get_organization(login)
         if response.ok:
