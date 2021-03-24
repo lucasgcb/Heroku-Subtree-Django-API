@@ -1,15 +1,43 @@
-Comandos para desenvolvimento
+## App na plataforma Heroku
+
+https://voughzera.herokuapp.com/api/orgs/
+
+API:
+
+`/api/orgs/<login>`
+onde `<login>` é o nome de login da organização no GitHub.
+
+retorna os dados no seguinte formato:
+```
+{
+    "login": "string",
+    "name": "string",
+    "score": int
+}
+```
+Score é usado para ordenar as saídas, e é a soma do número de membros públicos da organização com o número de repositórios públicos.
+
+
+Utiliza [whitenoise](https://github.com/evansd/whitenoise) para entrega de arquivos estáticos.
+
+### Comandos chave para desenvolvimento
 
 ```bash
-
+### Git para enviar ao heroku; subtree pois o projeto é subpasta
 heroku git:remote -a voughzera
-git subtree push --prefix vough_backend heroku master
+git subtree push --prefix vough_backend heroku master 
+git subtree split --prefix vough_backend -b voughtree
+git push -f heroku voughtree:master
 
+## Virtual Environment para requerimentos
 python3.9 -m venv vough
 source vough/bin/activate
 
+## Bibliotecas para compilar psycopg2
 sudo apt-get install python3.9-dev
 sudo apt install libpq-dev
+
+## Arquivos estaticos django
 python manage.py collectstatic
 gunicorn vough_backend.wsgi
 k6 run -e API_BASE='http://localhost:8000/' tests-open.js
