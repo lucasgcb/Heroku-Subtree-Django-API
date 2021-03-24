@@ -1,2 +1,2 @@
-release: ./tasks.sh
+release: bash /tasks.sh
 web: gunicorn vough_backend.wsgi
