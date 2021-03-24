@@ -22,15 +22,17 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     Viewset for viewing, storing and deleting API information of GitHub organizations.
 
     ## Endpoint 1
-    Check the cache of viewed organizations
-
-    /api/orgs/
-
+    # /api/orgs/
+    GET the cache of viewed organizations in json format, ordered by
+    highest score (number of public repositores + public members).
 
     ## Endpoint 2
-    Enter an organization <login> name for json results. Returns 404 if it does not exist.
+    # /api/orgs/<login>
+    GET an organization with given <login> name for json results.
+    Returns 404 if it does not exist.
 
-    /api/orgs/<login>
+    DELETE an organization with given <login> name from cache
+    Returns 404 if it does not exist.
     """
     # Ordenar por ordem decrescente (maior para menor)
     queryset = models.Organization.objects.all().order_by('-score')  # pylint: disable=no-member
