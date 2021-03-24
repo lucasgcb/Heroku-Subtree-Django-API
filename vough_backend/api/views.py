@@ -1,8 +1,10 @@
 from rest_framework import viewsets, status
 from rest_framework.views import Response
-
+from django.http import Http404
 from api import models, serializers
 from api.integrations.github import GithubApi
+from api.models import Organization
+import json
 
 # TODOS:
 # 1 - Buscar organização pelo login através da API do Github
@@ -13,9 +15,22 @@ from api.integrations.github import GithubApi
 
 class OrganizationViewSet(viewsets.ModelViewSet):
 
-    queryset = models.Organization.objects.all()
+    queryset = models.Organization.objects.all().order_by('score')
     serializer_class = serializers.OrganizationSerializer
     lookup_field = "login"
 
     def retrieve(self, request, login=None):
-        return Response({})
+        API = GithubApi()
+        r = API.get_organization(login)
+        if r.ok: 
+            json = r.json()
+            try:
+                name = json["name"]
+            except:
+                name = json["login"]
+            
+            score = json["public_repos"] + API.get_organization_public_members(login)
+            b = Organization(login=json["login"], name=name, score=score)
+            b.save()
+            return Response(json)
+        raise Http404
