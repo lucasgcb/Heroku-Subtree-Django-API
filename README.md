@@ -20,6 +20,17 @@ Score é usado para ordenar as saídas, e é a soma do número de membros públi
 
 Utiliza [whitenoise](https://github.com/evansd/whitenoise) para entrega de arquivos estáticos.
 
+
+### Rodar o projeto com docker-compose
+```bash
+docker-compose up
+```
+
+### Rodar o projeto com docker run louco
+```bash
+sudo docker run --network host -d $(sudo docker build --tag vough -q .)
+```
+
 ### Comandos chave para desenvolvimento
 
 ```bash
