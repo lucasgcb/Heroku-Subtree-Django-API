@@ -24,8 +24,13 @@ class OrganizationViewSet(viewsets.ModelViewSet):
         r = API.get_organization(login)
         if r.ok: 
             json = r.json()
+            try:
+                name = json["name"]
+            except:
+                name = json["login"]
+            
             score = json["public_repos"] + API.get_organization_public_members(login)
-            b = Organization(login=json["login"], name=json["name"], score=score)
+            b = Organization(login=json["login"], name=name, score=score)
             b.save()
             return Response(json)
         raise Http404
