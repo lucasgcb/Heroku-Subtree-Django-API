@@ -7,19 +7,27 @@ API:
 `/api/orgs/<login>`
 onde `<login>` é o nome de login da organização no GitHub.
 
-retorna os dados no seguinte formato:
-```
-{
-    "login": "string",
-    "name": "string",
-    "score": int
-}
-```
-Score é usado para ordenar as saídas, e é a soma do número de membros públicos da organização com o número de repositórios públicos.
+- GET retorna os dados da organização em json como descritos na [API oficial do GitHub](https://docs.github.com/en/rest/reference/orgs#get-an-organization)
+- DELETE retorna um 204 se existir em cache, 404 se não.
 
+`/api/orgs/`
+- GET retorna os dados no seguinte formato:
+ ```
+    {
+        "login": "string",
+        "name": "string",
+        "score": int
+    }
+ ```
+
+
+Score é dado pela soma do número de membros públicos da organização com o número de repositórios públicos da organização.
+Esta informação é utilizada para ordenar as organizações em cache, de maior prioridade para menor.
+
+
+# Informações de Desenvolvimento
 
 Utiliza [whitenoise](https://github.com/evansd/whitenoise) para entrega de arquivos estáticos.
-
 
 ### Rodar o projeto com docker-compose
 ```bash
@@ -51,10 +59,12 @@ sudo apt install libpq-dev
 ## Arquivos estaticos django
 python manage.py collectstatic
 gunicorn vough_backend.wsgi
+
+## Rodar testes
 k6 run -e API_BASE='http://localhost:8000/' tests-open.js
 ```
 
-
+### Informações da prova
 
 
 
