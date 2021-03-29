@@ -1,3 +1,6 @@
+Fork com a solução de um desafio aberto da Instruct-BR. 
+Repositório: https://github.com/instruct-br/teste-python-jr-remoto
+
 ## App na plataforma Heroku
 
 https://voughzera.herokuapp.com/api/orgs/
