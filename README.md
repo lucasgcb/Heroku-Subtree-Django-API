@@ -1,5 +1,11 @@
 Fork com a solução de um desafio aberto da Instruct-BR. 
-Repositório: https://github.com/instruct-br/teste-python-jr-remoto
+
+Repositório original: https://github.com/instruct-br/teste-python-jr-remoto
+
+## Objetivo
+
+Construir uma API entregue na plataforma Heroku com a tecnologia Django + Django REST.
+Esta API entrega informações da API aberta da [GitHub API](https://docs.github.com/en/rest/).
 
 ## App na plataforma Heroku
 
